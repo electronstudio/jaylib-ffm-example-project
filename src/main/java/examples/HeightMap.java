@@ -1,43 +1,48 @@
 package examples;
 
 
-import static com.raylib.Jaylib.*;
-import static com.raylib.Raylib.Vector3;
+import com.raylib.*;
+
 import static com.raylib.Raylib.*;
+import static com.raylib.Raylib.CameraMode.CAMERA_ORBITAL;
 
 
 public class HeightMap {
     public static void main(String args[]) {
-        InitWindow(800, 450, "Raylib static texture test");
-        SetTargetFPS(60);
-        Camera3D camera = new Camera3D()
-                ._position(new Vector3().x(18).y(16).z(18))
-                .target(new Vector3())
-                .up(new Vector3().x(0).y(1).z(0))
-                .fovy(45).projection(CAMERA_PERSPECTIVE);
-
-        Image image = LoadImage("resources/heightmap.png");
-        Texture texture = LoadTextureFromImage(image);
-        Mesh mesh = GenMeshHeightmap(image, new Vector3().x(16).y(8).z(16));
-        Model model = LoadModelFromMesh(mesh);
-        model.materials().maps().position(0).texture(texture);
+       initWindow(800, 450, "Raylib static texture test");
+setTargetFPS(60);
 
 
-        UnloadImage(image);
-        SetCameraMode(camera, CAMERA_ORBITAL);
+    Camera3D camera = new Camera3D(new Vector3(18,16,18),
+            new Vector3(),
+            new Vector3(0,1,0), 45, 0);
 
-        while(!WindowShouldClose()){
-            UpdateCamera(camera);
-            BeginDrawing();
-            ClearBackground(RAYWHITE);
-            BeginMode3D(camera);
-            DrawModel(model, new Vector3().x(-8).y(0).z(-8), 1, RED);
-            DrawGrid(20, 1.0f);
-            EndMode3D();
-            DrawText("This mesh should be textured", 190, 200, 20, VIOLET);
-            DrawFPS(20, 20);
-            EndDrawing();
-        }
-        CloseWindow();
+    Image image = loadImage("resources/heightmap.png");
+    Texture texture = loadTextureFromImage(image);
+    Mesh mesh = genMeshHeightmap(image,new Vector3(16, 8, 16));
+    Model model = loadModelFromMesh(mesh);
+
+    var mats = com.raylib.jextract.Model.materials(model.memorySegment);
+        System.out.println(mats);
+    var maps = com.raylib.jextract.Material.maps(mats);
+    var matmap = com.raylib.jextract.MaterialMap.asSlice(maps, 0);
+        com.raylib.jextract.MaterialMap.texture(matmap, texture.memorySegment);
+
+    //model.materials.maps().position(0).texture(texture);
+    unloadImage(image);
+
+        while(!windowShouldClose()){
+        updateCamera(camera, CAMERA_ORBITAL); //fixme
+        beginDrawing();
+        clearBackground(RAYWHITE);
+        beginMode3D(camera);
+        drawModel(model, new Vector3(-8,0,-8), 1, RED);
+        drawGrid(20, 1.0f);
+        endMode3D();
+        drawText("Hello world", 190, 200, 20, VIOLET);
+        drawFPS(20, 20);
+        endDrawing();
     }
+    closeWindow();
+}
 }

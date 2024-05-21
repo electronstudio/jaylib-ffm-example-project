@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>jaylib-maven-example-project</artifactId>
+    <artifactId>jaylib-ffm-example-project</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>22</maven.compiler.source>
+        <maven.compiler.target>22</maven.compiler.target>
         <main.class>Main</main.class>
     </properties>
 
@@ -34,12 +34,17 @@
         </plugins>
     </build>
 
-
+    <repositories>
+    <repository>
+        <id>github</id>
+        <url>https://maven.pkg.github.com/electronstudio/jaylib-ffm</url>
+    </repository>
+    </repositories>
     <dependencies>
         <dependency>
-            <groupId>uk.co.electronstudio.jaylib</groupId>
-            <artifactId>jaylib</artifactId>
-            <version>[4.2.0,4.3)</version>
+            <groupId>io.github.electronstudio</groupId>
+            <artifactId>jaylib-ffm</artifactId>
+            <version>0.0.2</version>
         </dependency>
     </dependencies>
 

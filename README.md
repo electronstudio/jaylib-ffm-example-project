@@ -1,4 +1,4 @@
-# Example Maven project for Jaylib
+# Example Maven project for Jaylib-FFM
 
 You can import this project into IntelliJ or Eclipse.
 

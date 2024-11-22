@@ -1,3 +1,5 @@
+package com.example;
+
 import static com.raylib.Raylib.*;
 import static com.raylib.Raylib.CameraMode.CAMERA_ORBITAL;
 import static com.raylib.Raylib.CameraProjection.CAMERA_PERSPECTIVE;
